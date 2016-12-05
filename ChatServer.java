@@ -9,7 +9,7 @@ public	class	ChatServer
 	static	Vector	connections;
 
 
-	// mainƒƒ\ƒbƒh
+	// mainãƒ¡ã‚½ãƒƒãƒ‰
 	public	static	void	main(String[]	args)
 	{
 		int	port	=	DEFAULT_PORT;
@@ -18,7 +18,7 @@ public	class	ChatServer
 			port	=	Integer.parseInt(args[0]);
 		}
 
-		// ƒ\ƒPƒbƒg‚ğ¶¬‚·‚éiÚ‘±‚·‚éjB
+		//ã‚½ã‚±ãƒƒãƒˆã®ç”Ÿæˆã€€ï¼ˆæ¥ç¶šï¼‰
 		try	{
 			servsock	=	new	ServerSocket(port);
 		}	catch	(IOException	e)	{
@@ -37,10 +37,10 @@ public	class	ChatServer
 				System.err.println(e);
 			}
 		}
-	} // mainƒƒ\ƒbƒh‚ÌI‚í‚èB
+	} // mainãƒ¡ã‚½ãƒƒãƒ‰çµ‚äº†
 
 
-	// addConnectionƒƒ\ƒbƒhFV‚µ‚¢Ú‘±‚ğ’Ç‰Á‚·‚éB
+	// addConnection?ãƒ¡ã‚½ãƒƒãƒ‰ï¼šæ–°ã—ã„æ¥ç¶šã®è¿½åŠ 
 	public	static	void	addConnection(Socket	s)
 	{
 		if	(connections	==	null)
@@ -48,17 +48,17 @@ public	class	ChatServer
 			connections	=	new	Vector();
 		}
 		connections.addElement(s);
-	} // addConnectionƒƒ\ƒbƒh‚ÌI‚í‚èB
+	} // addConnectionãƒ¡ã‚½ãƒƒãƒ‰ã®çµ‚äº†
 
 
-	// deleteConnectionƒƒ\ƒbƒhFÚ‘±‚ğíœ‚·‚éB
+	// deleteConnection???\?b?h?F?Ú‘???íœ????
 	public	static	void	deleteConnection(Socket	s)
 	{
 		if	(connections	!=	null)
 		{
 			connections.removeElement(s);
 		}
-	} // deleteConnectionƒƒ\ƒbƒh‚ÌI‚í‚èB
+	} // deleteConnectionãƒ¡ã‚½ãƒƒãƒ‰ã®çµ‚äº†
 
 
 
@@ -70,7 +70,7 @@ public	class	ChatServer
 
 
 
-	// sendAllƒƒ\ƒbƒhFŠeƒNƒ‰ƒCƒAƒ“ƒg‚ÉƒƒbƒZ[ƒW‚ğ‘—‚éB
+	// sendAll???\?b?h?F?e?N???C?A???g?Éƒ??b?Z?[?W?ğ‘—‚?
 	public	static	void	sendAll(String	s)
 	{
 		if	(connections	!=	null)
@@ -86,13 +86,13 @@ public	class	ChatServer
 			}
 		}
 		System.out.println(s);
-	} // sendAllƒƒ\ƒbƒh‚ÌI‚í‚èB
-} // ChatServerƒNƒ‰ƒX‚ÌI‚í‚èB
+	} // sendAllãƒ¡ã‚½ãƒƒãƒ‰ã®çµ‚äº†
+} // ChatServerã‚¯ãƒ©ã‚¹?ÌI???B
 
 
 
 
-// ClientProcƒNƒ‰ƒX
+// ClientProcã‚¯ãƒ©ã‚¹
 class	clientProc	implements	Runnable
 {
 	Socket	sock;
@@ -101,7 +101,7 @@ class	clientProc	implements	Runnable
 	String	name	=	null;
 	ChatServer	chserv	=	null;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ?R???X?g???N?^
 	public	clientProc(Socket	s)	throws	IOException
 	{
 		sock	=	s;
@@ -110,12 +110,12 @@ class	clientProc	implements	Runnable
 	}
 
 
-	// ƒXƒŒƒbƒhˆ—‚Ì–{‘Ì
+	// ?X???b?h?????Ì–{??
 	public	void	run()	{
 		try	{
 			while	(name == null)
 			{
-				outPW.print("‚¨–¼‘O‚ÍHF  ");
+				outPW.print("?????O?ÍH?F  ");
 				outPW.flush();
 				name	=	inBR.readLine();
 			}
@@ -133,7 +133,7 @@ class	clientProc	implements	Runnable
 			} catch (IOException e2) {
 			}
 		}
-	} // run‚ÌI‚í‚èB
-} // clientProcƒNƒ‰ƒX‚ÌI‚í‚èB
+	} // run?ÌI???B
+} // clientProcã‚¯ãƒ©ã‚¹?ÌI???B
 
 
