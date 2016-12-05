@@ -75,10 +75,10 @@ public	class	ChatServer
 	{
 		if	(connections	!=	null)
 		{
-			for(Enumeration	en	=	connections.elements();		en.hasMoreElements();	)
+			for(Enumeration	en = connections.elements(); en.hasMoreElements();	)
 			{
 				try	{
-					PrintWriter	pw	=	new	PrintWriter(((Socket) en.nextElement()).getOutputStream());
+					PrintWriter	pw	= new PrintWriter(((Socket) en.nextElement()).getOutputStream());
 					pw.println(s);
 					pw.flush();
 				} catch(IOException	e)	{
