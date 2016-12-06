@@ -1,0 +1,4 @@
+Aoki,Ebina,52
+Yamaguchi,Tokyo,43
+Horie,Yokohama,55
+Yoshino,Yokohama,42
