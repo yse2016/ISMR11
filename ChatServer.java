@@ -9,7 +9,7 @@ public	class	ChatServer
 	static	Vector	connections;
 
 
-	// mainƒƒ\ƒbƒh
+	// mainãƒ¡ã‚½ãƒƒãƒ‰
 	public	static	void	main(String[]	args)
 	{
 		int	port	=	DEFAULT_PORT;
@@ -18,7 +18,7 @@ public	class	ChatServer
 			port	=	Integer.parseInt(args[0]);
 		}
 
-		// ƒ\ƒPƒbƒg‚ğ¶¬‚·‚éiÚ‘±‚·‚éjB
+		// Æ’\Æ’PÆ’bÆ’gâ€šÃ°ÂÂ¶ÂÂ¬â€šÂ·â€šÃ©ÂiÂÂÂÃšâ€˜Â±â€šÂ·â€šÃ©ÂjÂB
 		try	{
 			servsock	=	new	ServerSocket(port);
 		}	catch	(IOException	e)	{
@@ -37,10 +37,10 @@ public	class	ChatServer
 				System.err.println(e);
 			}
 		}
-	} // mainƒƒ\ƒbƒh‚ÌI‚í‚èB
+	} // mainÆ’ÂÆ’\Æ’bÆ’hâ€šÃŒÂIâ€šÃ­â€šÃ¨ÂB
 
 
-	// addConnectionƒƒ\ƒbƒhFV‚µ‚¢Ú‘±‚ğ’Ç‰Á‚·‚éB
+	// addConnectionÆ’ÂÆ’\Æ’bÆ’hÂFÂVâ€šÂµâ€šÂ¢ÂÃšâ€˜Â±â€šÃ°â€™Ã‡â€°Ãâ€šÂ·â€šÃ©ÂB
 	public	static	void	addConnection(Socket	s)
 	{
 		if	(connections	==	null)
@@ -48,17 +48,17 @@ public	class	ChatServer
 			connections	=	new	Vector();
 		}
 		connections.addElement(s);
-	} // addConnectionƒƒ\ƒbƒh‚ÌI‚í‚èB
+	} // addConnectionÆ’ÂÆ’\Æ’bÆ’hâ€šÃŒÂIâ€šÃ­â€šÃ¨ÂB
 
 
-	// deleteConnectionƒƒ\ƒbƒhFÚ‘±‚ğíœ‚·‚éB
+	// deleteConnectionÆ’ÂÆ’\Æ’bÆ’hÂFÂÃšâ€˜Â±â€šÃ°ÂÃ­ÂÅ“â€šÂ·â€šÃ©ÂB
 	public	static	void	deleteConnection(Socket	s)
 	{
 		if	(connections	!=	null)
 		{
 			connections.removeElement(s);
 		}
-	} // deleteConnectionƒƒ\ƒbƒh‚ÌI‚í‚èB
+	} // deleteConnectionÆ’ÂÆ’\Æ’bÆ’hâ€šÃŒÂIâ€šÃ­â€šÃ¨ÂB
 
 
 
@@ -70,7 +70,7 @@ public	class	ChatServer
 
 
 
-	// sendAllƒƒ\ƒbƒhFŠeƒNƒ‰ƒCƒAƒ“ƒg‚ÉƒƒbƒZ[ƒW‚ğ‘—‚éB
+	// sendAllÆ’ÂÆ’\Æ’bÆ’hÂFÅ eÆ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gâ€šÃ‰Æ’ÂÆ’bÆ’ZÂ[Æ’Wâ€šÃ°â€˜â€”â€šÃ©ÂB
 	public	static	void	sendAll(String	s)
 	{
 		if	(connections	!=	null)
@@ -86,13 +86,13 @@ public	class	ChatServer
 			}
 		}
 		System.out.println(s);
-	} // sendAllƒƒ\ƒbƒh‚ÌI‚í‚èB
-} // ChatServerƒNƒ‰ƒX‚ÌI‚í‚èB
+	} // sendAllÆ’ÂÆ’\Æ’bÆ’hâ€šÃŒÂIâ€šÃ­â€šÃ¨ÂB
+} // ChatServerÆ’NÆ’â€°Æ’Xâ€šÃŒÂIâ€šÃ­â€šÃ¨ÂB
 
 
 
 
-// ClientProcƒNƒ‰ƒX
+// ClientProcÆ’NÆ’â€°Æ’X
 class	clientProc	implements	Runnable
 {
 	Socket	sock;
@@ -101,7 +101,7 @@ class	clientProc	implements	Runnable
 	String	name	=	null;
 	ChatServer	chserv	=	null;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// 
 	public	clientProc(Socket	s)	throws	IOException
 	{
 		sock	=	s;
@@ -110,12 +110,12 @@ class	clientProc	implements	Runnable
 	}
 
 
-	// ƒXƒŒƒbƒhˆ—‚Ì–{‘Ì
+	// Æ’XÆ’Å’Æ’bÆ’hÂË†â€”Ââ€šÃŒâ€“{â€˜ÃŒ
 	public	void	run()	{
 		try	{
 			while	(name == null)
 			{
-				outPW.print("‚¨–¼‘O‚ÍHF  ");
+				outPW.print("â€šÂ¨â€“Â¼â€˜Oâ€šÃÂHÂF  ");
 				outPW.flush();
 				name	=	inBR.readLine();
 			}
@@ -133,7 +133,7 @@ class	clientProc	implements	Runnable
 			} catch (IOException e2) {
 			}
 		}
-	} // run‚ÌI‚í‚èB
-} // clientProcƒNƒ‰ƒX‚ÌI‚í‚èB
+	} // runâ€šÃŒÂIâ€šÃ­â€šÃ¨ÂB
+} // clientProcÆ’NÆ’â€°Æ’Xâ€šÃŒÂIâ€šÃ­â€šÃ¨ÂB
 
 
