@@ -2,8 +2,9 @@
 
 import java.io.*;
 
-public class CopyByFileA {
+public class CopyByteFileA {
 	public static void main(String[] args) {
+		try{
 		// 1. ストリームをつくる
 		FileInputStream in = new FileInputStream("xxxxx.jpg");
 		FileInputStream out = new FileInputStream("yyyyy.jpg");
@@ -17,6 +18,8 @@ public class CopyByFileA {
 		// 3. ストリームを閉じる
 		in.close();
 		out.close();
-		
+		}catch (Exception e) {
+			
+		}
 	}
 }
