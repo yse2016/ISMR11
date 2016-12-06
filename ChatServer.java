@@ -1,139 +1,122 @@
-import	java.io.*;
-import	java.net.*;
-import	java.util.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
-public	class	ChatServer
-{
-	static	final	int	DEFAULT_PORT	=	6000;
-	static	ServerSocket	servsock;
-	static	Vector	connections;
+public class ChatServer{
+	static final int DEFAULT_PORT = 6000;
+	static ServerSocket servsock;
+	static Vector connections;
 
+	// mainãƒ¡ã‚½ãƒƒãƒ‰
+	public static void main(String[] args) {
 
-	// mainƒƒ\ƒbƒh
-	public	static	void	main(String[]	args)
-	{
-		int	port	=	DEFAULT_PORT;
-		if(args.length	>	0)
-		{
-			port	=	Integer.parseInt(args[0]);
+		int port = DEFAULT_PORT;
+		if( args.length > 0 ){
+			port = Integer.parseInt( args[0] );
 		}
 
-		// ƒ\ƒPƒbƒg‚ğ¶¬‚·‚éiÚ‘±‚·‚éjB
-		try	{
-			servsock	=	new	ServerSocket(port);
-		}	catch	(IOException	e)	{
+		// 1. ã‚½ã‚±ãƒƒãƒˆã‚’ç”Ÿæˆã™ã‚‹(ï¼æ¥ç¶šã™ã‚‹)
+		try{
+			servsock = new ServerSocket( port );
+
+		// ä¾‹å¤–å‡¦ç†
+		} catch( IOException e ){
 			System.err.println(e);
 			System.exit(1);
 		}
 
-		while(true)
-		{
-			try	{
-				Socket	cs	=	servsock.accept();
-				addConnection(cs);
-				Thread	ct	=	new	Thread(new	clientProc(cs));
-				ct.start();
-			} catch	(IOException	e)	{
+		while( true ){
+			try{
+				Socket cs = servsock.accept();
+				addConection(cs);
+				Thread ct = new Thread( new clientProc(cs) );
+
+			// ä¾‹å¤–å‡¦ç†
+			} catch( IOException e ){
 				System.err.println(e);
 			}
 		}
-	} // mainƒƒ\ƒbƒh‚ÌI‚í‚èB
+	}
 
+	// addConectionãƒ¡ã‚½ãƒƒãƒ‰ï¼šæ–°ã—ã„æ¥ç¶šã‚’è¿½åŠ ã™ã‚‹
+	public static void addConection( Socket s ){
 
-	// addConnectionƒƒ\ƒbƒhFV‚µ‚¢Ú‘±‚ğ’Ç‰Á‚·‚éB
-	public	static	void	addConnection(Socket	s)
-	{
-		if	(connections	==	null)
-		{
-			connections	=	new	Vector();
+		if( connections == null ){
+			connections = new Vector();
 		}
 		connections.addElement(s);
-	} // addConnectionƒƒ\ƒbƒh‚ÌI‚í‚èB
+	}
 
+	// deleteConectionãƒ¡ã‚½ãƒƒãƒ‰ï¼šæ¥ç¶šã‚’å‰Šé™¤ã™ã‚‹
+	public static void deleteConection( Socket s ){
 
-	// deleteConnectionƒƒ\ƒbƒhFÚ‘±‚ğíœ‚·‚éB
-	public	static	void	deleteConnection(Socket	s)
-	{
-		if	(connections	!=	null)
-		{
+		if( connections != null ){
 			connections.removeElement(s);
 		}
-	} // deleteConnectionƒƒ\ƒbƒh‚ÌI‚í‚èB
+	}
 
+	// sendAllãƒ¡ã‚½ãƒƒãƒ‰ï¼šå„ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
+	public static void sendAll( String s ){
 
-
-
-
-
-
-
-
-
-
-	// sendAllƒƒ\ƒbƒhFŠeƒNƒ‰ƒCƒAƒ“ƒg‚ÉƒƒbƒZ[ƒW‚ğ‘—‚éB
-	public	static	void	sendAll(String	s)
-	{
-		if	(connections	!=	null)
-		{
-			for(Enumeration	en	=	connections.elements();		en.hasMoreElements();	)
-			{
-				try	{
-					PrintWriter	pw	=	new	PrintWriter(((Socket) en.nextElement()).getOutputStream());
-					pw.println(s);
+		if( connections != null ){
+			for( Enumeration en = connections.elements(); en.hasMoreElements(); ){
+				try{
+					PrintWriter pw = new PrintWriter( ((Socket) en.nextElement()).getOutputStream() );
+					pw.println( s );
 					pw.flush();
-				} catch(IOException	e)	{
+
+				// ä¾‹å¤–å‡¦ç†
+				} catch( IOException e ){
 				}
 			}
 		}
-		System.out.println(s);
-	} // sendAllƒƒ\ƒbƒh‚ÌI‚í‚èB
-} // ChatServerƒNƒ‰ƒX‚ÌI‚í‚èB
+		System.out.println( s );
+	}
+}
 
 
 
 
-// ClientProcƒNƒ‰ƒX
-class	clientProc	implements	Runnable
-{
-	Socket	sock;
-	BufferedReader	inBR;
-	PrintWriter	outPW;
-	String	name	=	null;
-	ChatServer	chserv	=	null;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	public	clientProc(Socket	s)	throws	IOException
-	{
-		sock	=	s;
-		inBR	=	new	BufferedReader(new	InputStreamReader(sock.getInputStream()));
-		outPW	=	new	PrintWriter(sock.getOutputStream());
+class clientProc implements Runnable{
+
+	// ãƒ‡ãƒ¼ã‚¿ã‚’æº–å‚™
+	Socket sock;
+	BufferedReader inBR;
+	PrintWriter outPW;
+	String name = null;
+	ChatServer chserv = null;
+
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	public clientProc( Socket s ) throws IOException{
+		sock  = s;
+		inBR  = new BufferedReader( new InputStreamReader( sock.getInputStream() ));
+		outPW = new PrintWriter( sock.getOutputStream() );
 	}
 
-
-	// ƒXƒŒƒbƒhˆ—‚Ì–{‘Ì
-	public	void	run()	{
-		try	{
-			while	(name == null)
-			{
-				outPW.print("‚¨–¼‘O‚ÍHF  ");
+	// ã‚¹ãƒ¬ãƒƒãƒ‰å‡¦ç†ã®æœ¬ä½“
+	public void run(){
+		try{
+			while( name == null ){
+				outPW.print("åå‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ï¼š ");
 				outPW.flush();
-				name	=	inBR.readLine();
+				name = inBR.readLine();
 			}
-			String	line	=	inBR.readLine();
-			while(!"quit".equals(line))
-			{
-				ChatServer.sendAll(name + ">  " + line);
-				line	=	inBR.readLine();
+			String line = inBR.readLine();
+			while( !"quit".equals(line) ){
+				ChatServer.sendAll( name + "> " + line );
+				line = inBR.readLine();
 			}
-			ChatServer.deleteConnection(sock);
+			ChatServer.deleteConection( sock );
 			sock.close();
-		} catch (IOException	e) {
-			try	{
+
+		// ä¾‹å¤–å‡¦ç†
+		} catch( IOException e ){
+			try{
 				sock.close();
-			} catch (IOException e2) {
+			// ä¾‹å¤–å‡¦ç†2
+			} catch( IOException e2 ){
 			}
 		}
-	} // run‚ÌI‚í‚èB
-} // clientProcƒNƒ‰ƒX‚ÌI‚í‚èB
-
-
+	}
+}
